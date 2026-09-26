@@ -1,0 +1,17 @@
+[project]
+name = "text-to-sql-guardrails"
+version = "0.1.0"
+description = "Two layers between LLM-written SQL and your database: a parsing guard and a database-enforced sandbox"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = ["sqlglot==30.19.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["sqlguard"]

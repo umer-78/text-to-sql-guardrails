@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/sqlguard
+          key: sqlguard-data-v1
+      - run: pip install -e '.[dev]'
+      - run: pytest -q
+      # the attack suite on Chinook and the Spider checks
+      - run: python -m sqlguard bench

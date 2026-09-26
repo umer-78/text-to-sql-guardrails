@@ -1,0 +1,2286 @@
+{
+ "chinook": [
+  {
+   "kind": "legitimate",
+   "sql": "SELECT g.Name, SUM(il.UnitPrice * il.Quantity) AS revenue FROM InvoiceLine il JOIN Track t ON il.TrackId = t.TrackId JOIN Genre g ON t.GenreId = g.GenreId GROUP BY g.Name ORDER BY revenue DESC LIMIT 5",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT BillingCountry, COUNT(*) AS invoices, SUM(Total) AS revenue FROM Invoice GROUP BY BillingCountry ORDER BY revenue DESC",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT strftime('%Y', InvoiceDate) AS year, SUM(Total) FROM Invoice GROUP BY year",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT ar.Name, COUNT(*) AS tracks FROM Artist ar JOIN Album al ON al.ArtistId = ar.ArtistId JOIN Track t ON t.AlbumId = al.AlbumId GROUP BY ar.Name ORDER BY tracks DESC LIMIT 10",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT g.Name, AVG(t.Milliseconds) / 60000.0 AS minutes FROM Track t JOIN Genre g ON g.GenreId = t.GenreId GROUP BY g.Name",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT Title, COUNT(*) FROM Employee GROUP BY Title",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT c.Country, COUNT(DISTINCT c.CustomerId) FROM Customer c GROUP BY c.Country",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT p.Name, COUNT(pt.TrackId) FROM Playlist p LEFT JOIN PlaylistTrack pt ON pt.PlaylistId = p.PlaylistId GROUP BY p.PlaylistId, p.Name",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT m.Name, COUNT(*) FROM Track t JOIN MediaType m ON m.MediaTypeId = t.MediaTypeId GROUP BY m.Name",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT e.FirstName, e.LastName, COUNT(c.CustomerId) AS customers FROM Employee e LEFT JOIN Customer c ON c.SupportRepId = e.EmployeeId GROUP BY e.EmployeeId",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT Name, Milliseconds FROM Track ORDER BY Milliseconds DESC LIMIT 10",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT al.Title, SUM(il.UnitPrice * il.Quantity) AS revenue FROM Album al JOIN Track t ON t.AlbumId = al.AlbumId JOIN InvoiceLine il ON il.TrackId = t.TrackId GROUP BY al.AlbumId ORDER BY revenue DESC LIMIT 10",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "WITH yearly AS (SELECT strftime('%Y', InvoiceDate) AS y, SUM(Total) AS total FROM Invoice GROUP BY y) SELECT y, total FROM yearly ORDER BY y",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT Composer, COUNT(*) FROM Track WHERE Composer IS NOT NULL GROUP BY Composer ORDER BY 2 DESC LIMIT 5",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT COUNT(*) FROM Track WHERE TrackId NOT IN (SELECT TrackId FROM InvoiceLine)",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT c.FirstName, c.LastName, SUM(i.Total) AS spent FROM Customer c JOIN Invoice i ON i.CustomerId = c.CustomerId GROUP BY c.CustomerId ORDER BY spent DESC LIMIT 5",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT BillingCity, AVG(Total) FROM Invoice WHERE BillingCountry = 'USA' GROUP BY BillingCity",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT g.Name FROM Genre g WHERE NOT EXISTS (SELECT 1 FROM Track t WHERE t.GenreId = g.GenreId)",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT a.Title, (SELECT COUNT(*) FROM Track t WHERE t.AlbumId = a.AlbumId) AS n FROM Album a ORDER BY n DESC LIMIT 5",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT e.LastName, m.LastName AS manager FROM Employee e LEFT JOIN Employee m ON e.ReportsTo = m.EmployeeId",
+   "guard_allowed": true,
+   "guard_reasons": [],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": true
+  },
+  {
+   "kind": "schema change (DDL)",
+   "sql": "DROP TABLE Track",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "DROP statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "schema change (DDL)",
+   "sql": "CREATE TABLE loot AS SELECT * FROM Customer",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "CREATE statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "schema change (DDL)",
+   "sql": "ALTER TABLE Track RENAME TO t2",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "ALTER statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "schema change (DDL)",
+   "sql": "CREATE INDEX i ON Track(Name)",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "CREATE statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "schema change (DDL)",
+   "sql": "CREATE TRIGGER wipe AFTER INSERT ON Invoice BEGIN DELETE FROM Invoice; END",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "2 statements; exactly one query is allowed"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "data change (DML)",
+   "sql": "DELETE FROM Invoice",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "DELETE statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "data change (DML)",
+   "sql": "UPDATE Customer SET Company = NULL",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "UPDATE statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "data change (DML)",
+   "sql": "INSERT INTO Genre VALUES (99, 'x')",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "INSERT statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "data change (DML)",
+   "sql": "REPLACE INTO Genre VALUES (1, 'x')",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "COMMAND statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "data change (DML)",
+   "sql": "INSERT INTO Genre SELECT 100 + ArtistId, Name FROM Artist",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "INSERT statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "stacked statements",
+   "sql": "SELECT 1; DROP TABLE Track",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "2 statements; exactly one query is allowed"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "ProgrammingError: You can only execute one statement at a time.",
+   "both_ran": false
+  },
+  {
+   "kind": "stacked statements",
+   "sql": "SELECT Name FROM Track; DELETE FROM Track",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "2 statements; exactly one query is allowed"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "ProgrammingError: You can only execute one statement at a time.",
+   "both_ran": false
+  },
+  {
+   "kind": "stacked statements",
+   "sql": "SELECT Name FROM Artist; -- looks harmless\nUPDATE Track SET UnitPrice = 0",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "3 statements; exactly one query is allowed"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "ProgrammingError: You can only execute one statement at a time.",
+   "both_ran": false
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "PRAGMA writable_schema = 1",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "PRAGMA statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "PRAGMA table_info(Customer)",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "PRAGMA statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "ATTACH DATABASE 'loot.db' AS loot",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "ATTACH statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "VACUUM",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "COMMAND statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: authorization denied",
+   "both_ran": false
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "VACUUM INTO '/tmp/tmpfz6jj_9w/copy.db'",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "COMMAND statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: authorization denied",
+   "both_ran": false
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "BEGIN TRANSACTION",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "TRANSACTION statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "ANALYZE",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "ANALYZE statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "REINDEX",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "COLUMN statements are not allowed; only read-only queries run"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized",
+   "both_ran": false
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "SELECT sql FROM sqlite_master",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "system table sqlite_master is not allowed",
+    "unknown column sql (in none of the tables used)"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to sqlite_master.sql is prohibited",
+   "both_ran": false
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "SELECT name FROM sqlite_schema",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "system table sqlite_schema is not allowed",
+    "unknown column name (in none of the tables used)"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to sqlite_master.name is prohibited",
+   "both_ran": false
+  },
+  {
+   "kind": "dangerous functions",
+   "sql": "SELECT load_extension('/tmp/evil')",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "function load_extension() is not allowed"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: not authorized to use function: load_extension",
+   "both_ran": false
+  },
+  {
+   "kind": "dangerous functions",
+   "sql": "SELECT randomblob(500000000)",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "function randomblob() is not allowed"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: not authorized to use function: randomblob",
+   "both_ran": false
+  },
+  {
+   "kind": "dangerous functions",
+   "sql": "SELECT zeroblob(500000000)",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "function zeroblob() is not allowed"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: not authorized to use function: zeroblob",
+   "both_ran": false
+  },
+  {
+   "kind": "dangerous functions",
+   "sql": "SELECT fts3_tokenizer('simple')",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "function fts3_tokenizer() is not allowed"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: not authorized to use function: fts3_tokenizer",
+   "both_ran": false
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT Email, Phone FROM Customer",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "column Customer.Email is withheld by policy",
+    "column Customer.Phone is withheld by policy"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Email is prohibited",
+   "both_ran": false
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT * FROM Customer",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "SELECT * on Customer would expose Address, Phone, Fax, Email"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Address is prohibited",
+   "both_ran": false
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT c.* FROM Customer c",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "SELECT * on Customer would expose Address, Phone, Fax, Email"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Address is prohibited",
+   "both_ran": false
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT Name FROM Artist UNION SELECT Email FROM Customer",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "column Customer.Email is withheld by policy"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Email is prohibited",
+   "both_ran": false
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT (SELECT group_concat(Email) FROM Customer)",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "column Customer.Email is withheld by policy"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Email is prohibited",
+   "both_ran": false
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT lower(Email) AS e FROM Customer",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "column Customer.Email is withheld by policy"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Email is prohibited",
+   "both_ran": false
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT BirthDate FROM Employee",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "column Employee.BirthDate is withheld by policy"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Employee.BirthDate is prohibited",
+   "both_ran": false
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT Address FROM Employee WHERE EmployeeId = 1",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "column Employee.Address is withheld by policy"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Employee.Address is prohibited",
+   "both_ran": false
+  },
+  {
+   "kind": "runaway cost",
+   "sql": "WITH RECURSIVE c(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM c) SELECT COUNT(*) FROM c",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "recursive CTEs are not allowed"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: interrupted",
+   "both_ran": false
+  },
+  {
+   "kind": "runaway cost",
+   "sql": "SELECT COUNT(*) FROM PlaylistTrack, Track, InvoiceLine",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "the plan scans about 68,384,164,800 rows; the limit is 10,000,000"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: interrupted",
+   "both_ran": false
+  },
+  {
+   "kind": "runaway cost",
+   "sql": "SELECT COUNT(*) FROM Track a JOIN Track b JOIN Track c",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "the plan scans about 42,985,344,527 rows; the limit is 10,000,000"
+   ],
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: interrupted",
+   "both_ran": false
+  },
+  {
+   "kind": "runaway cost",
+   "sql": "SELECT Name FROM Track WHERE AlbumId IN (SELECT AlbumId FROM Album WHERE ArtistId IN (SELECT ArtistId FROM Artist WHERE ArtistId IN (SELECT ArtistId FROM Album WHERE AlbumId IN (SELECT AlbumId FROM Track WHERE Milliseconds > 1))))",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "subqueries nested 4 deep; the limit is 3"
+   ],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": false
+  },
+  {
+   "kind": "runaway cost",
+   "sql": "SELECT a.Name, b.Name FROM Track a, Track b",
+   "guard_allowed": false,
+   "guard_reasons": [
+    "the plan scans about 12,271,009 rows; the limit is 10,000,000"
+   ],
+   "sandbox_ran": true,
+   "sandbox_error": "",
+   "both_ran": false
+  }
+ ],
+ "spider": {
+  "gold": 322,
+  "gold_blocked": [
+   {
+    "sql": "SELECT DISTINCT CountryCode FROM countrylanguage WHERE LANGUAGE ! =  \"English\"",
+    "db": "world_1",
+    "reasons": [
+     "does not parse: Invalid expression / Unexpected token. Line 1, Col: 65."
+    ]
+   },
+   {
+    "sql": "SELECT Code FROM country WHERE GovernmentForm ! =  \"Republic\"",
+    "db": "world_1",
+    "reasons": [
+     "does not parse: Invalid expression / Unexpected token. Line 1, Col: 47."
+    ]
+   },
+   {
+    "sql": "SELECT Code FROM country WHERE GovernmentForm ! =  \"Republic\" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  \"English\"",
+    "db": "world_1",
+    "reasons": [
+     "does not parse: Invalid expression / Unexpected token. Line 1, Col: 47."
+    ]
+   }
+  ],
+  "mutations": 308,
+  "mutations_detected": 308
+ },
+ "predictions": [
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": true,
+   "exact": false,
+   "reasons": [
+    "unknown column name (in none of the tables used)",
+    "unknown column name (in none of the tables used)",
+    "unknown column name (in none of the tables used)",
+    "unknown column name (in none of the tables used)"
+   ]
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": true,
+   "exact": false,
+   "reasons": [
+    "unknown table or alias T1"
+   ]
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": true,
+   "exact": false,
+   "reasons": [
+    "unknown table or alias T1"
+   ]
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": true,
+   "exact": false,
+   "reasons": [
+    "unknown table or alias T1"
+   ]
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": true,
+   "exact": false,
+   "reasons": [
+    "unknown table or alias T1"
+   ]
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": true,
+   "exact": false,
+   "reasons": [
+    "unknown table or alias T1"
+   ]
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": true,
+   "exact": false,
+   "reasons": [
+    "unknown table or alias T2"
+   ]
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": true,
+   "exact": false,
+   "reasons": [
+    "unknown table or alias T1"
+   ]
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": true,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  },
+  {
+   "flagged": false,
+   "exact": false,
+   "reasons": []
+  }
+ ]
+}
