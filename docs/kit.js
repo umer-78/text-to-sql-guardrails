@@ -55,6 +55,7 @@ export function bars(el, rows, opts = {}) {
   const max = opts.max ?? Math.max(...rows.map((r) => Math.abs(r.value)), 1e-9);
   const fmt = opts.fmt || ((v) => String(v));
   el.classList.add('bars');
+  el.style.setProperty('--valw', `${Math.min(9, Math.max(4.5, ...rows.map((r) => String(r.text ?? fmt(r.value)).length * 0.62 + 0.4)))}em`);
   el.innerHTML = rows.map((r) => `<div class="bar${r.dim ? ' dim' : ''}" title="${esc(r.title || r.label)}"><span class="name">${esc(r.label)}</span>` +
     `<span class="track"><span class="fill" style="display:block;width:${Math.max(0, Math.min(100, (100 * Math.abs(r.value)) / max)).toFixed(2)}%;--c:${r.color || 'var(--accent)'}"></span></span>` +
     `<span class="val">${esc(r.text ?? fmt(r.value))}</span></div>`).join('');
@@ -119,7 +120,7 @@ export function xy(el, spec) {
     const xt = X.ticks || (X.log ? logTicks(x0, x1) : niceTicks(x0, x1, W < 480 ? 4 : 6));
     const yt = Y.ticks || (Y.log ? logTicks(y0, y1).filter((t, i, a) => a.length < 8 || /^[1]/.test(String(t))) : niceTicks(y0, y1, 5));
     const fx = X.fmt || String, fy = Y.fmt || String;
-    const ml = Math.max(...yt.map((t) => fy(t).length)) * 6.4 + 14, mr = spec.marginRight ?? 16, mt = 12, mb = X.label ? 42 : 26;
+    const ml = Math.max(0, ...yt.map((t) => fy(t).length)) * 6.4 + 14, mr = spec.marginRight ?? 16, mt = 12, mb = X.label ? 42 : 26;
     const sx = (v) => ml + (X.log ? (Math.log(v) - Math.log(x0)) / (Math.log(x1) - Math.log(x0)) : (v - x0) / (x1 - x0)) * (W - ml - mr);
     const sy = (v) => mt + (1 - (Y.log ? (Math.log(Math.max(v, y0 * 1e-3)) - Math.log(y0)) / (Math.log(y1) - Math.log(y0)) : (v - y0) / (y1 - y0))) * (H - mt - mb);
     const clip = `c${Math.random().toString(36).slice(2, 8)}`;
@@ -178,6 +179,7 @@ export function diverge(el, rows, opts = {}) {
   const max = opts.max ?? Math.max(...rows.map((r) => Math.abs(r.value)), 1e-9);
   const fmt = opts.fmt || ((v) => String(v));
   el.classList.add('bars');
+  el.style.setProperty('--valw', `${Math.min(9, Math.max(4.5, ...rows.map((r) => String(r.text ?? fmt(r.value)).length * 0.62 + 0.4)))}em`);
   el.innerHTML = rows.map((r) => {
     const w = Math.min(50, (50 * Math.abs(r.value)) / max);
     const c = r.color || (r.value < 0 ? 'var(--bad)' : 'var(--good)');
