@@ -1,5 +1,7 @@
 # text-to-sql-guardrails
 
+**Live demo:** https://umer-78.github.io/text-to-sql-guardrails/ (the guard's decision and reasons for all 60 bench queries)
+
 Let an LLM write SQL against a real database without letting it damage anything, leak anything, or answer from tables that don't exist. Every generated query passes through two independent layers:
 
 1. **The guard** parses the SQL (sqlglot) and blocks:
@@ -72,6 +74,7 @@ if decision.allowed:
 pip install -e '.[dev]'
 pytest -q
 python -m sqlguard bench
+python -m sqlguard.demo    # rebuild the live demo's data in docs/
 ```
 
 Chinook and Spider's evaluation files are downloaded on first use into `~/.cache/sqlguard`; nothing is committed.

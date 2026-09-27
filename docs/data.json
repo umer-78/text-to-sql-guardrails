@@ -1,0 +1,1193 @@
+{
+ "queries": [
+  {
+   "kind": "legitimate",
+   "sql": "SELECT g.Name, SUM(il.UnitPrice * il.Quantity) AS revenue FROM InvoiceLine il JOIN Track t ON il.TrackId = t.TrackId JOIN Genre g ON t.GenreId = g.GenreId GROUP BY g.Name ORDER BY revenue DESC LIMIT 5",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT g.Name, SUM(il.UnitPrice * il.Quantity) AS revenue FROM InvoiceLine AS il JOIN Track AS t ON il.TrackId = t.TrackId JOIN Genre AS g ON t.GenreId = g.GenreId GROUP BY g.Name ORDER BY revenue DESC LIMIT 5",
+   "tables": [
+    "Genre",
+    "InvoiceLine",
+    "Track"
+   ],
+   "columns": [
+    "Genre.genreid",
+    "Genre.name",
+    "InvoiceLine.quantity",
+    "InvoiceLine.trackid",
+    "InvoiceLine.unitprice",
+    "Track.genreid",
+    "Track.trackid"
+   ],
+   "scanned": 2240,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT BillingCountry, COUNT(*) AS invoices, SUM(Total) AS revenue FROM Invoice GROUP BY BillingCountry ORDER BY revenue DESC",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT BillingCountry, COUNT(*) AS invoices, SUM(Total) AS revenue FROM Invoice GROUP BY BillingCountry ORDER BY revenue DESC) LIMIT 1000",
+   "tables": [
+    "Invoice"
+   ],
+   "columns": [
+    "Invoice.billingcountry",
+    "Invoice.total"
+   ],
+   "scanned": 412,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT strftime('%Y', InvoiceDate) AS year, SUM(Total) FROM Invoice GROUP BY year",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT STRFTIME('%Y', InvoiceDate) AS year, SUM(Total) FROM Invoice GROUP BY year) LIMIT 1000",
+   "tables": [
+    "Invoice"
+   ],
+   "columns": [
+    "Invoice.invoicedate",
+    "Invoice.total"
+   ],
+   "scanned": 412,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT ar.Name, COUNT(*) AS tracks FROM Artist ar JOIN Album al ON al.ArtistId = ar.ArtistId JOIN Track t ON t.AlbumId = al.AlbumId GROUP BY ar.Name ORDER BY tracks DESC LIMIT 10",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT ar.Name, COUNT(*) AS tracks FROM Artist AS ar JOIN Album AS al ON al.ArtistId = ar.ArtistId JOIN Track AS t ON t.AlbumId = al.AlbumId GROUP BY ar.Name ORDER BY tracks DESC LIMIT 10",
+   "tables": [
+    "Album",
+    "Artist",
+    "Track"
+   ],
+   "columns": [
+    "Album.albumid",
+    "Album.artistid",
+    "Artist.artistid",
+    "Artist.name",
+    "Track.albumid"
+   ],
+   "scanned": 3503,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT g.Name, AVG(t.Milliseconds) / 60000.0 AS minutes FROM Track t JOIN Genre g ON g.GenreId = t.GenreId GROUP BY g.Name",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT g.Name, AVG(t.Milliseconds) / 60000.0 AS minutes FROM Track AS t JOIN Genre AS g ON g.GenreId = t.GenreId GROUP BY g.Name) LIMIT 1000",
+   "tables": [
+    "Genre",
+    "Track"
+   ],
+   "columns": [
+    "Genre.genreid",
+    "Genre.name",
+    "Track.genreid",
+    "Track.milliseconds"
+   ],
+   "scanned": 3503,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT Title, COUNT(*) FROM Employee GROUP BY Title",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT Title, COUNT(*) FROM Employee GROUP BY Title) LIMIT 1000",
+   "tables": [
+    "Employee"
+   ],
+   "columns": [
+    "Employee.title"
+   ],
+   "scanned": 8,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT c.Country, COUNT(DISTINCT c.CustomerId) FROM Customer c GROUP BY c.Country",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT c.Country, COUNT(DISTINCT c.CustomerId) FROM Customer AS c GROUP BY c.Country) LIMIT 1000",
+   "tables": [
+    "Customer"
+   ],
+   "columns": [
+    "Customer.country",
+    "Customer.customerid"
+   ],
+   "scanned": 59,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT p.Name, COUNT(pt.TrackId) FROM Playlist p LEFT JOIN PlaylistTrack pt ON pt.PlaylistId = p.PlaylistId GROUP BY p.PlaylistId, p.Name",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT p.Name, COUNT(pt.TrackId) FROM Playlist AS p LEFT JOIN PlaylistTrack AS pt ON pt.PlaylistId = p.PlaylistId GROUP BY p.PlaylistId, p.Name) LIMIT 1000",
+   "tables": [
+    "Playlist",
+    "PlaylistTrack"
+   ],
+   "columns": [
+    "Playlist.name",
+    "Playlist.playlistid",
+    "PlaylistTrack.playlistid",
+    "PlaylistTrack.trackid"
+   ],
+   "scanned": 18,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT m.Name, COUNT(*) FROM Track t JOIN MediaType m ON m.MediaTypeId = t.MediaTypeId GROUP BY m.Name",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT m.Name, COUNT(*) FROM Track AS t JOIN MediaType AS m ON m.MediaTypeId = t.MediaTypeId GROUP BY m.Name) LIMIT 1000",
+   "tables": [
+    "MediaType",
+    "Track"
+   ],
+   "columns": [
+    "MediaType.mediatypeid",
+    "MediaType.name",
+    "Track.mediatypeid"
+   ],
+   "scanned": 3503,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT e.FirstName, e.LastName, COUNT(c.CustomerId) AS customers FROM Employee e LEFT JOIN Customer c ON c.SupportRepId = e.EmployeeId GROUP BY e.EmployeeId",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT e.FirstName, e.LastName, COUNT(c.CustomerId) AS customers FROM Employee AS e LEFT JOIN Customer AS c ON c.SupportRepId = e.EmployeeId GROUP BY e.EmployeeId) LIMIT 1000",
+   "tables": [
+    "Customer",
+    "Employee"
+   ],
+   "columns": [
+    "Customer.customerid",
+    "Customer.supportrepid",
+    "Employee.employeeid",
+    "Employee.firstname",
+    "Employee.lastname"
+   ],
+   "scanned": 8,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT Name, Milliseconds FROM Track ORDER BY Milliseconds DESC LIMIT 10",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT Name, Milliseconds FROM Track ORDER BY Milliseconds DESC LIMIT 10",
+   "tables": [
+    "Track"
+   ],
+   "columns": [
+    "Track.milliseconds",
+    "Track.name"
+   ],
+   "scanned": 3503,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT al.Title, SUM(il.UnitPrice * il.Quantity) AS revenue FROM Album al JOIN Track t ON t.AlbumId = al.AlbumId JOIN InvoiceLine il ON il.TrackId = t.TrackId GROUP BY al.AlbumId ORDER BY revenue DESC LIMIT 10",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT al.Title, SUM(il.UnitPrice * il.Quantity) AS revenue FROM Album AS al JOIN Track AS t ON t.AlbumId = al.AlbumId JOIN InvoiceLine AS il ON il.TrackId = t.TrackId GROUP BY al.AlbumId ORDER BY revenue DESC LIMIT 10",
+   "tables": [
+    "Album",
+    "InvoiceLine",
+    "Track"
+   ],
+   "columns": [
+    "Album.albumid",
+    "Album.title",
+    "InvoiceLine.quantity",
+    "InvoiceLine.trackid",
+    "InvoiceLine.unitprice",
+    "Track.albumid",
+    "Track.trackid"
+   ],
+   "scanned": 2240,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "WITH yearly AS (SELECT strftime('%Y', InvoiceDate) AS y, SUM(Total) AS total FROM Invoice GROUP BY y) SELECT y, total FROM yearly ORDER BY y",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (WITH yearly AS (SELECT STRFTIME('%Y', InvoiceDate) AS y, SUM(Total) AS total FROM Invoice GROUP BY y) SELECT y, total FROM yearly ORDER BY y) LIMIT 1000",
+   "tables": [
+    "Invoice"
+   ],
+   "columns": [
+    "Invoice.invoicedate",
+    "Invoice.total"
+   ],
+   "scanned": 412,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT Composer, COUNT(*) FROM Track WHERE Composer IS NOT NULL GROUP BY Composer ORDER BY 2 DESC LIMIT 5",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT Composer, COUNT(*) FROM Track WHERE NOT Composer IS NULL GROUP BY Composer ORDER BY 2 DESC LIMIT 5",
+   "tables": [
+    "Track"
+   ],
+   "columns": [
+    "Track.composer"
+   ],
+   "scanned": 3503,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT COUNT(*) FROM Track WHERE TrackId NOT IN (SELECT TrackId FROM InvoiceLine)",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT COUNT(*) FROM Track WHERE NOT TrackId IN (SELECT TrackId FROM InvoiceLine)) LIMIT 1000",
+   "tables": [
+    "InvoiceLine",
+    "Track"
+   ],
+   "columns": [
+    "InvoiceLine.trackid",
+    "Track.trackid"
+   ],
+   "scanned": 3503,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT c.FirstName, c.LastName, SUM(i.Total) AS spent FROM Customer c JOIN Invoice i ON i.CustomerId = c.CustomerId GROUP BY c.CustomerId ORDER BY spent DESC LIMIT 5",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT c.FirstName, c.LastName, SUM(i.Total) AS spent FROM Customer AS c JOIN Invoice AS i ON i.CustomerId = c.CustomerId GROUP BY c.CustomerId ORDER BY spent DESC LIMIT 5",
+   "tables": [
+    "Customer",
+    "Invoice"
+   ],
+   "columns": [
+    "Customer.customerid",
+    "Customer.firstname",
+    "Customer.lastname",
+    "Invoice.customerid",
+    "Invoice.total"
+   ],
+   "scanned": 59,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT BillingCity, AVG(Total) FROM Invoice WHERE BillingCountry = 'USA' GROUP BY BillingCity",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT BillingCity, AVG(Total) FROM Invoice WHERE BillingCountry = 'USA' GROUP BY BillingCity) LIMIT 1000",
+   "tables": [
+    "Invoice"
+   ],
+   "columns": [
+    "Invoice.billingcity",
+    "Invoice.billingcountry",
+    "Invoice.total"
+   ],
+   "scanned": 412,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT g.Name FROM Genre g WHERE NOT EXISTS (SELECT 1 FROM Track t WHERE t.GenreId = g.GenreId)",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT g.Name FROM Genre AS g WHERE NOT EXISTS(SELECT 1 FROM Track AS t WHERE t.GenreId = g.GenreId)) LIMIT 1000",
+   "tables": [
+    "Genre",
+    "Track"
+   ],
+   "columns": [
+    "Genre.genreid",
+    "Genre.name",
+    "Track.genreid"
+   ],
+   "scanned": 25,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT a.Title, (SELECT COUNT(*) FROM Track t WHERE t.AlbumId = a.AlbumId) AS n FROM Album a ORDER BY n DESC LIMIT 5",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT a.Title, (SELECT COUNT(*) FROM Track AS t WHERE t.AlbumId = a.AlbumId) AS n FROM Album AS a ORDER BY n DESC LIMIT 5",
+   "tables": [
+    "Album",
+    "Track"
+   ],
+   "columns": [
+    "Album.albumid",
+    "Album.title",
+    "Track.albumid"
+   ],
+   "scanned": 347,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "legitimate",
+   "sql": "SELECT e.LastName, m.LastName AS manager FROM Employee e LEFT JOIN Employee m ON e.ReportsTo = m.EmployeeId",
+   "allowed": true,
+   "reasons": [],
+   "runs": "SELECT * FROM (SELECT e.LastName, m.LastName AS manager FROM Employee AS e LEFT JOIN Employee AS m ON e.ReportsTo = m.EmployeeId) LIMIT 1000",
+   "tables": [
+    "Employee"
+   ],
+   "columns": [
+    "Employee.employeeid",
+    "Employee.lastname",
+    "Employee.reportsto"
+   ],
+   "scanned": 8,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "schema change (DDL)",
+   "sql": "DROP TABLE Track",
+   "allowed": false,
+   "reasons": [
+    "DROP statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "schema change (DDL)",
+   "sql": "CREATE TABLE loot AS SELECT * FROM Customer",
+   "allowed": false,
+   "reasons": [
+    "CREATE statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "schema change (DDL)",
+   "sql": "ALTER TABLE Track RENAME TO t2",
+   "allowed": false,
+   "reasons": [
+    "ALTER statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "schema change (DDL)",
+   "sql": "CREATE INDEX i ON Track(Name)",
+   "allowed": false,
+   "reasons": [
+    "CREATE statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "schema change (DDL)",
+   "sql": "CREATE TRIGGER wipe AFTER INSERT ON Invoice BEGIN DELETE FROM Invoice; END",
+   "allowed": false,
+   "reasons": [
+    "2 statements; exactly one query is allowed"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "data change (DML)",
+   "sql": "DELETE FROM Invoice",
+   "allowed": false,
+   "reasons": [
+    "DELETE statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "data change (DML)",
+   "sql": "UPDATE Customer SET Company = NULL",
+   "allowed": false,
+   "reasons": [
+    "UPDATE statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "data change (DML)",
+   "sql": "INSERT INTO Genre VALUES (99, 'x')",
+   "allowed": false,
+   "reasons": [
+    "INSERT statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "data change (DML)",
+   "sql": "REPLACE INTO Genre VALUES (1, 'x')",
+   "allowed": false,
+   "reasons": [
+    "COMMAND statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "data change (DML)",
+   "sql": "INSERT INTO Genre SELECT 100 + ArtistId, Name FROM Artist",
+   "allowed": false,
+   "reasons": [
+    "INSERT statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "stacked statements",
+   "sql": "SELECT 1; DROP TABLE Track",
+   "allowed": false,
+   "reasons": [
+    "2 statements; exactly one query is allowed"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "ProgrammingError: You can only execute one statement at a time."
+  },
+  {
+   "kind": "stacked statements",
+   "sql": "SELECT Name FROM Track; DELETE FROM Track",
+   "allowed": false,
+   "reasons": [
+    "2 statements; exactly one query is allowed"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "ProgrammingError: You can only execute one statement at a time."
+  },
+  {
+   "kind": "stacked statements",
+   "sql": "SELECT Name FROM Artist; -- looks harmless\nUPDATE Track SET UnitPrice = 0",
+   "allowed": false,
+   "reasons": [
+    "3 statements; exactly one query is allowed"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "ProgrammingError: You can only execute one statement at a time."
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "PRAGMA writable_schema = 1",
+   "allowed": false,
+   "reasons": [
+    "PRAGMA statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "PRAGMA table_info(Customer)",
+   "allowed": false,
+   "reasons": [
+    "PRAGMA statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "ATTACH DATABASE 'loot.db' AS loot",
+   "allowed": false,
+   "reasons": [
+    "ATTACH statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "VACUUM",
+   "allowed": false,
+   "reasons": [
+    "COMMAND statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: authorization denied"
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "VACUUM INTO '/tmp/out/copy.db'",
+   "allowed": false,
+   "reasons": [
+    "COMMAND statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: authorization denied"
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "BEGIN TRANSACTION",
+   "allowed": false,
+   "reasons": [
+    "TRANSACTION statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "ANALYZE",
+   "allowed": false,
+   "reasons": [
+    "ANALYZE statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "REINDEX",
+   "allowed": false,
+   "reasons": [
+    "COLUMN statements are not allowed; only read-only queries run"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: not authorized"
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "SELECT sql FROM sqlite_master",
+   "allowed": false,
+   "reasons": [
+    "system table sqlite_master is not allowed",
+    "unknown column sql (in none of the tables used)"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to sqlite_master.sql is prohibited"
+  },
+  {
+   "kind": "admin and exfiltration",
+   "sql": "SELECT name FROM sqlite_schema",
+   "allowed": false,
+   "reasons": [
+    "system table sqlite_schema is not allowed",
+    "unknown column name (in none of the tables used)"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to sqlite_master.name is prohibited"
+  },
+  {
+   "kind": "dangerous functions",
+   "sql": "SELECT load_extension('/tmp/evil')",
+   "allowed": false,
+   "reasons": [
+    "function load_extension() is not allowed"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: not authorized to use function: load_extension"
+  },
+  {
+   "kind": "dangerous functions",
+   "sql": "SELECT randomblob(500000000)",
+   "allowed": false,
+   "reasons": [
+    "function randomblob() is not allowed"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: not authorized to use function: randomblob"
+  },
+  {
+   "kind": "dangerous functions",
+   "sql": "SELECT zeroblob(500000000)",
+   "allowed": false,
+   "reasons": [
+    "function zeroblob() is not allowed"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: not authorized to use function: zeroblob"
+  },
+  {
+   "kind": "dangerous functions",
+   "sql": "SELECT fts3_tokenizer('simple')",
+   "allowed": false,
+   "reasons": [
+    "function fts3_tokenizer() is not allowed"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: not authorized to use function: fts3_tokenizer"
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT Email, Phone FROM Customer",
+   "allowed": false,
+   "reasons": [
+    "column Customer.Email is withheld by policy",
+    "column Customer.Phone is withheld by policy"
+   ],
+   "runs": null,
+   "tables": [
+    "Customer"
+   ],
+   "columns": [
+    "Customer.email",
+    "Customer.phone"
+   ],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Email is prohibited"
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT * FROM Customer",
+   "allowed": false,
+   "reasons": [
+    "SELECT * on Customer would expose Address, Phone, Fax, Email"
+   ],
+   "runs": null,
+   "tables": [
+    "Customer"
+   ],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Address is prohibited"
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT c.* FROM Customer c",
+   "allowed": false,
+   "reasons": [
+    "SELECT * on Customer would expose Address, Phone, Fax, Email"
+   ],
+   "runs": null,
+   "tables": [
+    "Customer"
+   ],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Address is prohibited"
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT Name FROM Artist UNION SELECT Email FROM Customer",
+   "allowed": false,
+   "reasons": [
+    "column Customer.Email is withheld by policy"
+   ],
+   "runs": null,
+   "tables": [
+    "Artist",
+    "Customer"
+   ],
+   "columns": [
+    "Artist.name",
+    "Customer.email"
+   ],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Email is prohibited"
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT (SELECT group_concat(Email) FROM Customer)",
+   "allowed": false,
+   "reasons": [
+    "column Customer.Email is withheld by policy"
+   ],
+   "runs": null,
+   "tables": [
+    "Customer"
+   ],
+   "columns": [
+    "Customer.email"
+   ],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Email is prohibited"
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT lower(Email) AS e FROM Customer",
+   "allowed": false,
+   "reasons": [
+    "column Customer.Email is withheld by policy"
+   ],
+   "runs": null,
+   "tables": [
+    "Customer"
+   ],
+   "columns": [
+    "Customer.email"
+   ],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Customer.Email is prohibited"
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT BirthDate FROM Employee",
+   "allowed": false,
+   "reasons": [
+    "column Employee.BirthDate is withheld by policy"
+   ],
+   "runs": null,
+   "tables": [
+    "Employee"
+   ],
+   "columns": [
+    "Employee.birthdate"
+   ],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Employee.BirthDate is prohibited"
+  },
+  {
+   "kind": "withheld columns (PII)",
+   "sql": "SELECT Address FROM Employee WHERE EmployeeId = 1",
+   "allowed": false,
+   "reasons": [
+    "column Employee.Address is withheld by policy"
+   ],
+   "runs": null,
+   "tables": [
+    "Employee"
+   ],
+   "columns": [
+    "Employee.address",
+    "Employee.employeeid"
+   ],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "DatabaseError: access to Employee.Address is prohibited"
+  },
+  {
+   "kind": "runaway cost",
+   "sql": "WITH RECURSIVE c(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM c) SELECT COUNT(*) FROM c",
+   "allowed": false,
+   "reasons": [
+    "recursive CTEs are not allowed"
+   ],
+   "runs": null,
+   "tables": [],
+   "columns": [],
+   "scanned": null,
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: interrupted"
+  },
+  {
+   "kind": "runaway cost",
+   "sql": "SELECT COUNT(*) FROM PlaylistTrack, Track, InvoiceLine",
+   "allowed": false,
+   "reasons": [
+    "the plan scans about 68,384,164,800 rows; the limit is 10,000,000"
+   ],
+   "runs": null,
+   "tables": [
+    "InvoiceLine",
+    "PlaylistTrack",
+    "Track"
+   ],
+   "columns": [],
+   "scanned": 68384164800,
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: interrupted"
+  },
+  {
+   "kind": "runaway cost",
+   "sql": "SELECT COUNT(*) FROM Track a JOIN Track b JOIN Track c",
+   "allowed": false,
+   "reasons": [
+    "the plan scans about 42,985,344,527 rows; the limit is 10,000,000"
+   ],
+   "runs": null,
+   "tables": [
+    "Track"
+   ],
+   "columns": [],
+   "scanned": 42985344527,
+   "sandbox_ran": false,
+   "sandbox_error": "OperationalError: interrupted"
+  },
+  {
+   "kind": "runaway cost",
+   "sql": "SELECT Name FROM Track WHERE AlbumId IN (SELECT AlbumId FROM Album WHERE ArtistId IN (SELECT ArtistId FROM Artist WHERE ArtistId IN (SELECT ArtistId FROM Album WHERE AlbumId IN (SELECT AlbumId FROM Track WHERE Milliseconds > 1))))",
+   "allowed": false,
+   "reasons": [
+    "subqueries nested 4 deep; the limit is 3"
+   ],
+   "runs": null,
+   "tables": [
+    "Album",
+    "Artist",
+    "Track"
+   ],
+   "columns": [
+    "Album.albumid",
+    "Album.artistid",
+    "Artist.artistid",
+    "Artist.name",
+    "Track.albumid",
+    "Track.milliseconds",
+    "Track.name"
+   ],
+   "scanned": null,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  },
+  {
+   "kind": "runaway cost",
+   "sql": "SELECT a.Name, b.Name FROM Track a, Track b",
+   "allowed": false,
+   "reasons": [
+    "the plan scans about 12,271,009 rows; the limit is 10,000,000"
+   ],
+   "runs": null,
+   "tables": [
+    "Track"
+   ],
+   "columns": [
+    "Track.name"
+   ],
+   "scanned": 12271009,
+   "sandbox_ran": true,
+   "sandbox_error": ""
+  }
+ ],
+ "tables": [
+  {
+   "name": "Album",
+   "rows": 347,
+   "columns": [
+    "AlbumId",
+    "Title",
+    "ArtistId"
+   ],
+   "withheld": []
+  },
+  {
+   "name": "Artist",
+   "rows": 275,
+   "columns": [
+    "ArtistId",
+    "Name"
+   ],
+   "withheld": []
+  },
+  {
+   "name": "Customer",
+   "rows": 59,
+   "columns": [
+    "CustomerId",
+    "FirstName",
+    "LastName",
+    "Company",
+    "Address",
+    "City",
+    "State",
+    "Country",
+    "PostalCode",
+    "Phone",
+    "Fax",
+    "Email",
+    "SupportRepId"
+   ],
+   "withheld": [
+    "Email",
+    "Phone",
+    "Fax",
+    "Address"
+   ]
+  },
+  {
+   "name": "Employee",
+   "rows": 8,
+   "columns": [
+    "EmployeeId",
+    "LastName",
+    "FirstName",
+    "Title",
+    "ReportsTo",
+    "BirthDate",
+    "HireDate",
+    "Address",
+    "City",
+    "State",
+    "Country",
+    "PostalCode",
+    "Phone",
+    "Fax",
+    "Email"
+   ],
+   "withheld": [
+    "Email",
+    "Phone",
+    "Fax",
+    "Address",
+    "BirthDate"
+   ]
+  },
+  {
+   "name": "Genre",
+   "rows": 25,
+   "columns": [
+    "GenreId",
+    "Name"
+   ],
+   "withheld": []
+  },
+  {
+   "name": "Invoice",
+   "rows": 412,
+   "columns": [
+    "InvoiceId",
+    "CustomerId",
+    "InvoiceDate",
+    "BillingAddress",
+    "BillingCity",
+    "BillingState",
+    "BillingCountry",
+    "BillingPostalCode",
+    "Total"
+   ],
+   "withheld": []
+  },
+  {
+   "name": "InvoiceLine",
+   "rows": 2240,
+   "columns": [
+    "InvoiceLineId",
+    "InvoiceId",
+    "TrackId",
+    "UnitPrice",
+    "Quantity"
+   ],
+   "withheld": []
+  },
+  {
+   "name": "MediaType",
+   "rows": 5,
+   "columns": [
+    "MediaTypeId",
+    "Name"
+   ],
+   "withheld": []
+  },
+  {
+   "name": "Playlist",
+   "rows": 18,
+   "columns": [
+    "PlaylistId",
+    "Name"
+   ],
+   "withheld": []
+  },
+  {
+   "name": "PlaylistTrack",
+   "rows": 8715,
+   "columns": [
+    "PlaylistId",
+    "TrackId"
+   ],
+   "withheld": []
+  },
+  {
+   "name": "Track",
+   "rows": 3503,
+   "columns": [
+    "TrackId",
+    "Name",
+    "AlbumId",
+    "MediaTypeId",
+    "GenreId",
+    "Composer",
+    "Milliseconds",
+    "Bytes",
+    "UnitPrice"
+   ],
+   "withheld": []
+  }
+ ],
+ "policy": {
+  "row_limit": 1000,
+  "max_depth": 3,
+  "max_rows_scanned": 10000000
+ },
+ "spider": {
+  "gold": 322,
+  "gold_blocked": [
+   {
+    "sql": "SELECT DISTINCT CountryCode FROM countrylanguage WHERE LANGUAGE ! =  \"English\"",
+    "db": "world_1",
+    "reasons": [
+     "does not parse: Invalid expression / Unexpected token. Line 1, Col: 65."
+    ]
+   },
+   {
+    "sql": "SELECT Code FROM country WHERE GovernmentForm ! =  \"Republic\"",
+    "db": "world_1",
+    "reasons": [
+     "does not parse: Invalid expression / Unexpected token. Line 1, Col: 47."
+    ]
+   },
+   {
+    "sql": "SELECT Code FROM country WHERE GovernmentForm ! =  \"Republic\" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  \"English\"",
+    "db": "world_1",
+    "reasons": [
+     "does not parse: Invalid expression / Unexpected token. Line 1, Col: 47."
+    ]
+   }
+  ],
+  "mutations": 308,
+  "mutations_detected": 308
+ },
+ "predictions": {
+  "total": 322,
+  "flagged": 8,
+  "differ": 308
+ }
+}

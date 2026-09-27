@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Text-to-SQL Guardrails · Umer Hashmi</title>
+  <meta name="description" content="Every generated query parsed and checked before it runs, then run in a read-only sandbox: 60 queries on the Chinook database, and hallucinated columns in Spider.">
+  <link rel="stylesheet" href="kit.css">
+  <style>:root { --accent: #0369a1; --on-accent: #fff; } @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #7dd3fc; --on-accent: #0f0e0c; } }</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="crumb" href="https://umer-78.github.io/">← All projects</a>
+      <h1>Text-to-SQL Guardrails</h1>
+      <p class="lede">Letting a model write SQL against a real database needs two locks. The guard parses every query and stops anything but a single read-only query, unknown tables and columns, withheld personal data and runaway plans, and says why; the sandbox runs what passes on a read-only connection. Below: the guard's decision on each of 20 legitimate queries and 40 attacks.</p>
+      <div class="links"><a class="btn primary" href="#queries">Browse the queries</a><a class="btn" href="https://github.com/umer-78/text-to-sql-guardrails">Code and method</a></div>
+    </header>
+    <main>
+      <section class="kpis" id="kpis"></section>
+      <section class="card" id="queries">
+        <h2>The guard's decision on every query</h2>
+        <p class="sub">Each attack is something a prompt-injected or careless model could write. The sandbox column is what a read-only connection alone would have done with it.</p>
+        <div class="controls"><label for="kind">Show</label><select id="kind"></select></div>
+        <div id="list" class="qlist"></div>
+      </section>
+      <div class="grid2">
+        <section class="card"><h2>Schema and policy</h2><p class="sub" id="polSub"></p><div id="schema"></div></section>
+        <section class="card"><h2>Hallucinated schema, on Spider</h2><p class="sub">A model's predictions for Spider's dev questions, and the gold queries with one column swapped for a plausible name that does not exist.</p><div id="spider"></div></section>
+      </div>
+    </main>
+    <footer>Built by <a href="https://github.com/umer-78">Umer Hashmi</a> · Chinook sample database and the Spider benchmark are downloaded at run time; this page holds only table and column names, row counts, and the bench's own queries</footer>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
