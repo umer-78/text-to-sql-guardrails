@@ -1,5 +1,7 @@
 # text-to-sql-guardrails
 
+[![CI](https://github.com/umer-78/text-to-sql-guardrails/actions/workflows/ci.yml/badge.svg)](https://github.com/umer-78/text-to-sql-guardrails/actions/workflows/ci.yml)
+
 [![Text-to-SQL Guardrails: the live demo](.github/preview.jpg)](https://umer-78.github.io/text-to-sql-guardrails/)
 
 **Live demo:** https://umer-78.github.io/text-to-sql-guardrails/ (the guard's decision and reasons for all 60 bench queries)
@@ -80,3 +82,7 @@ python -m sqlguard.demo    # rebuild the live demo's data in docs/
 ```
 
 Chinook and Spider's evaluation files are downloaded on first use into `~/.cache/sqlguard`; nothing is committed.
+
+## Licence
+
+MIT licence (see [LICENSE](LICENSE)). The data it evaluates (the Chinook database and Spider) keeps its own licence and is downloaded when you run it.
