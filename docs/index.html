@@ -1,20 +1,27 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-scene="security">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Text-to-SQL Guardrails · Umer Hashmi</title>
   <meta name="description" content="Every generated query parsed and checked before it runs, then run in a read-only sandbox: 60 queries on the Chinook database, and hallucinated columns in Spider.">
+  <meta name="theme-color" content="#0369a1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="kit.css">
-  <style>:root { --accent: #0369a1; --on-accent: #fff; } @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #7dd3fc; --on-accent: #0f0e0c; } }</style>
+  <link rel="stylesheet" href="fx.css">
+  <style>:root { --accent: #0369a1; --fx-2: #22c55e; --fx-3: #f43f5e; --on-accent: #fff; } @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #7dd3fc; --on-accent: #0f0e0c; } }</style>
 </head>
 <body>
   <div class="wrap">
-    <header>
-      <a class="crumb" href="https://umer-78.github.io/">← All projects</a>
+    <nav class="fx-nav" aria-label="On this page"><a class="fx-home" href="https://umer-78.github.io/">← All projects</a><a class="fx-gh" href="https://github.com/umer-78/text-to-sql-guardrails">GitHub</a></nav>
+    <header class="fx-hero">
+      <span class="fx-eyebrow">LLM engineering · Python</span>
       <h1>Text-to-SQL Guardrails</h1>
       <p class="lede">Letting a model write SQL against a real database needs two locks. The guard parses every query and stops anything but a single read-only query, unknown tables and columns, withheld personal data and runaway plans, and says why; the sandbox runs what passes on a read-only connection. Below: the guard's decision on each of 20 legitimate queries and 40 attacks.</p>
       <div class="links"><a class="btn primary" href="#queries">Browse the queries</a><a class="btn" href="https://github.com/umer-78/text-to-sql-guardrails">Code and method</a></div>
+      <div class="fx-tags" aria-hidden="true"><div><span>python</span><span>llm</span><span>sql</span><span>sqlite</span><span>security</span><span>sqlglot</span><span>python</span><span>llm</span><span>sql</span><span>sqlite</span><span>security</span><span>sqlglot</span></div></div>
     </header>
     <main>
       <section class="kpis" id="kpis"></section>
@@ -32,5 +39,6 @@
     <footer>Built by <a href="https://github.com/umer-78">Umer Hashmi</a> · Chinook sample database and the Spider benchmark are downloaded at run time; this page holds only table and column names, row counts, and the bench's own queries</footer>
   </div>
   <script type="module" src="app.js"></script>
+  <script type="module" src="fx.js"></script>
 </body>
 </html>
