@@ -25,6 +25,9 @@
 :root[data-look][data-theme="dark"] { --accent: #17a7e8; --accent-hover: #43baf8; --accent-soft: rgb(23 167 232 / 0.14); --accent-glow: rgb(23 167 232 / 0.2); --on-accent: #04131d; --fx-2: #f49851; --fx-3: #a0bdfd; --bg: #061118; --bg-elevated: #0c181f; --surface: #0e1b23; --surface-2: #16242c; --surface-3: #202d36; --border: #273239; --border-strong: #38444c; --line: #273239; }</style>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.min.js" data-fx>
 <link rel="modulepreload" href="fx3d.js" data-fx>
+<link rel="canonical" href="https://umer-78.github.io/text-to-sql-guardrails/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23057cae'/><text x='16' y='22' font-size='17' text-anchor='middle' fill='white' font-family='system-ui,sans-serif' font-weight='700'>T</text></svg>">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Text-to-SQL Guardrails · Umer Hashmi", "url": "https://umer-78.github.io/text-to-sql-guardrails/", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any (runs in a web browser)", "isAccessibleForFree": true, "author": {"@type": "Person", "name": "Umer Hashmi", "url": "https://umer-78.github.io/"}, "description": "Every generated query parsed and checked before it runs, then run in a read-only sandbox: 60 queries on the Chinook database, and hallucinated columns in Spider.", "image": "https://umer-78.github.io/text-to-sql-guardrails/og.jpg", "sameAs": "https://github.com/umer-78/text-to-sql-guardrails"}</script>
 </head>
 <body>
   <div class="wrap">
@@ -34,7 +37,7 @@
       <h1>Text-to-SQL Guardrails</h1>
       <p class="lede">Letting a model write SQL against a real database needs two locks. The guard parses every query and stops anything but a single read-only query, unknown tables and columns, withheld personal data and runaway plans, and says why; the sandbox runs what passes on a read-only connection. Below: the guard's decision on each of 20 legitimate queries and 40 attacks.</p>
       <div class="links"><a class="btn primary" href="#queries">Browse the queries</a><a class="btn" href="https://github.com/umer-78/text-to-sql-guardrails">Code and method</a></div>
-      <div class="fx-tags" aria-hidden="true"><div><span>python</span><span>llm</span><span>sql</span><span>sqlite</span><span>security</span><span>sqlglot</span><span>python</span><span>llm</span><span>sql</span><span>sqlite</span><span>security</span><span>sqlglot</span></div></div>
+      <div class="fx-tags"><div><span>python</span><span>llm</span><span>sql</span><span>sqlite</span><span>security</span><span>sqlglot</span></div></div>
     </header>
     <main>
       <section class="kpis" id="kpis"></section>
